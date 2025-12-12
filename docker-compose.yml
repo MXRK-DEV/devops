@@ -7,13 +7,13 @@ services:
     env_file:
       - ./server/.env        
     ports:
-      - "5000:5000"
+      - "3000:3000"
 
   frontend:
     build:
       context: ./client
       args:
-        VITE_API_URL: http://3.26.242.54:5000/api
+        VITE_API_URL: http://3.26.242.54:3000/api
     container_name: frontend
     restart: always
     ports:
