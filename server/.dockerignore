@@ -1,9 +1,9 @@
-node_modules
-npm-debug.log
-Dockerfile
-.dockerignore
-.git
-.gitignore
-.env
-coverage
-dist
+// node_modules
+// npm-debug.log
+// Dockerfile
+// .dockerignore
+// .git
+// .gitignore
+// .env
+// coverage
+// dist
