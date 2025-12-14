@@ -1,33 +1,22 @@
-version: '3.8'
+# Two services: backend API on 5000, frontend (nginx) on 80
 services:
   backend:
     build: ./server
     container_name: backend
     restart: always
     env_file:
-      - ./server/.env
+      - ./server/.env        
     ports:
       - "3000:3000"
-    networks:
-      - mern-network
 
   frontend:
-    build: 
+    build:
       context: ./client
-      dockerfile: Dockerfile
       args:
-        - VITE_API_URL=http://backend:3000  # 👈 Build-time argument
+        VITE_API_URL: http://98.80.140.61:3000/api
     container_name: frontend
     restart: always
     ports:
       - "5173:5173"
-    environment:
-      - VITE_API_URL=http://backend:3000  # 👈 Runtime environment variable
     depends_on:
       - backend
-    networks:
-      - mern-network
-
-networks:
-  mern-network:
-    driver: bridge
