@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;  // FIXED: Added default value
 
 // Middleware - Fix CORS for Docker
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://frontend:5173'],
+ origin: ['http://98.80.140.61:5173', 'http://localhost:5173'],
   credentials: true
 }));
 
