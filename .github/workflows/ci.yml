@@ -72,39 +72,16 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_APP_DIR: ${{ secrets.EC2_APP_DIR }}
         run: |
-          ssh -i ec2_key.pem ${EC2_USER}@${EC2_HOST} << 'EOF'
+          ssh -i ec2_key.pem ${EC2_USER}@${EC2_HOST} << EOF
             set -e
             cd "${EC2_APP_DIR}"
 
-            echo "📥 Pulling latest code..."
             git fetch --all
             git reset --hard origin/main
 
-            echo "🔍 Checking for .env file..."
-            if [ ! -f .env ]; then
-              echo "❌ ERROR: .env file not found!"
-              exit 1
-            fi
-
-            echo "🐳 Building and starting containers..."
             docker compose up -d --build
 
-            echo "🧹 Cleaning up old images..."
             docker image prune -f
 
-            echo "📊 Container status:"
             docker compose ps
-
-            echo "📝 Backend logs (last 30 lines):"
-            docker compose logs backend --tail=30
-
-            # Check if backend is healthy
-            sleep 5
-            if ! docker compose ps backend | grep -q "Up"; then
-              echo "❌ Backend container is not running!"
-              docker compose logs backend
-              exit 1
-            fi
-
-            echo "✅ Deployment complete!"
           EOF
